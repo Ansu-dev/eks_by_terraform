@@ -7,11 +7,11 @@ resource "aws_eks_cluster" "eks-cluster" {
 
   name = var.cluster-name
   role_arn = var.eks-iam-cluster.arn
-  version = "1.22"
+  version = "1.28"
 
   vpc_config{
-    security_group_ids = [var.eks_sg_control-plane.id, var.eks_sg_nodes.id]
-    subnet_ids = flatten([var.eks-public-subnet[*].id])
+    security_group_ids = [var.eks-sg-control-plane.id, var.eks-sg-nodes.id]
+    subnet_ids = var.eks-public-subnet[*].id
     endpoint_public_access = true
     public_access_cidrs = ["0.0.0.0/0"]
   }
@@ -39,6 +39,7 @@ resource "aws_eks_node_group" "eks-node-group" {
   }
 
   depends_on = [
+    aws_eks_cluster.eks-cluster,
     var.eks-worker-node-policy-attachment,
     var.eks-worker-cni-policy-attachment,
     var.eks-worker-ec2-policy-attachment

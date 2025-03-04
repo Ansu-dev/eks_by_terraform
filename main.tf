@@ -26,7 +26,7 @@ module "subnet" {
 
 module "security_group" {
   source = "./modules/security-group"
-  eks_vpc = module.vpc
+  eks_vpc = module.vpc.eks_vpc
 }
 
 module "iam" {
