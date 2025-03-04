@@ -1,3 +1,2 @@
-variable "eks_vpc_id" {
-  description = "EKS VPC ID"
+variable "eks_vpc" {
 }

@@ -12,11 +12,18 @@ provider "aws" {
 
 module "vpc" {
   source = "./modules/vpc"
+  eks-public-subnet = module.subnet.eks-public-subnet
 }
+
+module "subnet" {
+  source = "./modules/subnet"
+  eks_vpc = module.vpc.eks_vpc
+}
+
 
 module "security_group" {
   source = "./modules/security-group"
-  eks_vpc_id = module.vpc.eks_vpc_id
+  eks_vpc_id = module.vpc.eks_vpc
 }
 
 
