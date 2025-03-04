@@ -7,6 +7,8 @@ resource "aws_vpc" "eks_vpc" {
 }
 
 resource "aws_internet_gateway" "eks_igw" {
+  depends_on = [aws_vpc.eks_vpc]
+
   vpc_id = aws_vpc.eks_vpc.id
 
   tags = {
@@ -15,6 +17,11 @@ resource "aws_internet_gateway" "eks_igw" {
 }
 
 resource "aws_route_table" "eks_route_table" {
+  depends_on = [
+    aws_vpc.eks_vpc,
+    aws_internet_gateway.eks_igw
+  ]
+
   vpc_id = aws_vpc.eks_vpc.id
 
   # 라우트 정보
@@ -26,4 +33,12 @@ resource "aws_route_table" "eks_route_table" {
   tags = {
     Name = "eks-route-table"
   }
+}
+
+resource "aws_route_table_association" "test-route-association-pub-sub" {
+
+  count = length(var.aws_vpc_public_subnets)
+  subnet_id = var.eks-public-subnet[count.index].id
+  route_table_id = aws_route_table.eks_route_table.id
+
 }
