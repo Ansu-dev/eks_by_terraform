@@ -1,2 +1,1 @@
-variable "eks_vpc" {
-}
+variable "eks_vpc" {}

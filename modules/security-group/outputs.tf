@@ -1,3 +1,7 @@
-output "eks_sg_id" {
-  value = aws_security_group.eks_sg.id
+output "eks-sg-control-plane" {
+  value = aws_security_group.test-eks_sg_controlplane
+}
+
+output "eks-sg-nodes" {
+  value = aws_security_group.test-eks_sg_nodes
 }

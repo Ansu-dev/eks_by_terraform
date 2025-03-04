@@ -1,5 +1,5 @@
 resource "aws_vpc" "eks_vpc" {
-  cidr_block = "10.0.0.0/16" # ip대역대(ip와 서브넷마스크를 조합하여 블록 생성)
+  cidr_block = var.aws_vpc_cidr_block # ip대역대(ip와 서브넷마스크를 조합하여 블록 생성)
 
   tags = {
     Name = "eks-vpc"
